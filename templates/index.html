@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twiiter 2.1</title>
+</head>
+<body>
+    <small>user: {{ current_user.name }}
+        <br>
+        <a href="{{ url_for('logout') }}">log out</a>
+    </small>
+    <hr>
+    <a href="{{ url_for('main') }}">Main Page</a>
+
+    <h1>Curennt Posts:</h1>
+
+    {% if posts %}
+    {% for post in posts %}
+        <p>
+            {{ post.text }}
+            {% for tag in post.tags %}
+            <a href="{{ url_for('tag', pk=tag.id) }}" style="text-decoration: none"><b><i>{{ tag }}</i></b></a>
+
+            {% endfor %}
+        </p>
+    {% endfor %}
+    {% else %}
+    <p>No Posts Yet, Make the First!</p>
+    {% endif %}
+
+    <hr>
+
+    <form method="post" action="{{ url_for('add_post') }}">
+        <input type="text" name="text" placeholder="post text">
+        <br>
+        <input type="text" name="tags" placeholder="tags">
+        <br>
+        <input type="submit" value="Add New Post">
+        <br>
+    </form>
+</body>
+</html>
